@@ -1,4 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
+const ApiClient = require('spotify-web-api-node');
+
 const assert = require('assert');
 
 const config = require('./config.json');
@@ -11,3 +13,8 @@ MongoClient.connect(config.db.url, function(err, client) {
 
   client.close();
 });
+
+
+let apiClient = new ApiClient();
+
+
