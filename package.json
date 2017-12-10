@@ -1,0 +1,23 @@
+{
+  "name": "spotify-analysis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamuelKupferschmid/spotify-analysis.git"
+  },
+  "author": "Lukas Fonti, Thomas Kunkel, Samuel Kupferschmid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SamuelKupferschmid/spotify-analysis/issues"
+  },
+  "homepage": "https://github.com/SamuelKupferschmid/spotify-analysis#readme",
+  "dependencies": {
+    "mongodb": "^3.0.0-rc0"
+  }
+}

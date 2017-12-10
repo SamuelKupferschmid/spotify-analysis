@@ -1,0 +1,9 @@
+{
+  "db": {
+  	"name": "spotify",
+    "url": "mongodb://localhost:27017"
+  },
+  "spotify": {
+  	"key" : ""
+  }
+}
