@@ -21,6 +21,7 @@ let existingIds = [];
 let queue = [];
 
 
+// executes requests sequentially to avoid bad API requests
 let runQueue = () => {
     console.log(`queue size: ${queue.length}`);
     let item = queue.pop();
@@ -71,8 +72,9 @@ MongoClient.connect(config.db.url, function (err, client) {
 
 });
 
+// fetches all playlist by country and pushes them to queue
 let queueCountryPlaylist = (cb, country) => {
-    request.get('https://api.spotify.com/v1/browse/featured-playlists?limit=50&country=' + country, {
+    request.get('https://api.spotify.com/v1/browse/featured-playlists?limit=999&country=' + country, {
             "headers": {
                 "Authorization": "Bearer " + token
             }
@@ -99,8 +101,8 @@ let queueCountryPlaylist = (cb, country) => {
         });
 };
 
+// fetches all tracks for a certain playlist
 let queuePlaylistTracks = (cb, playlist) => {
-    //console.log(`Playlist: ${playlist.name} Tracks: ${playlist.tracks.total}, Country: ${country}`);
     request.get(playlist.href, {
             "headers": {
                 "Authorization": "Bearer " + token
@@ -128,8 +130,6 @@ let queuePlaylistTracks = (cb, playlist) => {
 
             if (tracks.length > 0) {
 
-                //console.log(`insert ${tracks.length} items...`);
-
                 existingIds = existingIds.concat(tracks.map(t => t.id));
 
                 db.collection('tracks').insertMany(tracks, (err, res) => {
@@ -139,9 +139,6 @@ let queuePlaylistTracks = (cb, playlist) => {
 
             }
 
-            if (duplicates.length > 0) {
-                //console.log(`update ${duplicates.length} items...`);
-            }
             for (let d of duplicates) {
                 db.collection('tracks').updateOne({id: d}, {
                     "$push": {
